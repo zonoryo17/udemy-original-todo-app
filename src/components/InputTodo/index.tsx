@@ -1,14 +1,6 @@
 import type { ChangeEvent } from 'react';
 import { useInputTodo } from './useInputTodo';
-
-const style = {
-  backgroundColor: '#c6e5d9',
-  width: '400px',
-  height: '30px',
-  padding: '8px',
-  margin: '8px',
-  borderRadius: '8px',
-};
+import styles from './index.module.css';
 
 type Props = {
   todoText: string;
@@ -26,15 +18,16 @@ export const InputTodo: React.FC<Props> = ({
   const { handleSubmit } = useInputTodo({ onClickAdd });
 
   return (
-    <form style={style} onSubmit={handleSubmit}>
+    <form className={styles.container} onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="TODOを入力"
         value={todoText}
         onChange={onChangeTodoText}
         disabled={disabled}
+        className={styles.input}
       />
-      <button type="submit" disabled={disabled}>
+      <button type="submit" className={styles.button} disabled={disabled}>
         追加
       </button>
     </form>

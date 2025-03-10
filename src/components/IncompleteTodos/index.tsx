@@ -1,4 +1,3 @@
-import { Icon } from '../ui/Icon';
 import styles from './index.module.css';
 
 type Props = {
@@ -13,26 +12,37 @@ export const IncompleteTodos: React.FC<Props> = ({
   onClickComplete,
 }) => {
   return (
-    <div className="incomplete-area">
-      <div className={styles.headerWrapper}>
-        <p className="title">未完了のTODO</p>
-        <Icon name="trash" size={32} />
-      </div>
-      <ul>
-        {incompleteTodos.map((todo, index) => (
-          <li key={todo}>
-            <div className="list-row">
-              <p className="todo-item">{todo}</p>
-              <button type="button" onClick={() => onClickComplete(index)}>
-                完了
-              </button>
-              <button type="button" onClick={() => onClickDelete(index)}>
-                削除
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <p className={styles.title}>未完了のTODO</p>
+      {incompleteTodos.length === 0 ? (
+        <p className={styles.noTodo}>未完了のTODOはありません。</p>
+      ) : (
+        <ul>
+          {incompleteTodos.map((todo, index) => (
+            <li key={todo}>
+              <div className={styles.listRow}>
+                <p className="todo-item">{todo}</p>
+                <div>
+                  <button
+                    type="button"
+                    className={styles.button}
+                    onClick={() => onClickComplete(index)}
+                  >
+                    完了
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.button}
+                    onClick={() => onClickDelete(index)}
+                  >
+                    削除
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

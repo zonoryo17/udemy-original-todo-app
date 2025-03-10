@@ -29,8 +29,7 @@ export const Icon: React.FC<Props> = ({
   return (
     <Icon
       role="img"
-      width={size}
-      height={size}
+      size={size}
       color={color}
       strokeWidth={strokeWidth}
       {...props}
