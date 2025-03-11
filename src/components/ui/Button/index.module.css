@@ -1,0 +1,64 @@
+.button {
+  /* 共通のstyling */
+  margin: 0 2px;
+  padding: 4px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  /* disabledのstyling */
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #c9c9c95c;
+
+    &:hover {
+      background-color: #c9c9c95c;
+    }
+  }
+
+  /* variantのstyling*/
+  /* Primary */
+  &[data-variant='primary'] {
+    color: #fff;
+    background-color: #00674c;
+    border: none;
+
+    &:hover {
+      color: #fff;
+      background-color: #00674cdd;
+    }
+  }
+
+  /* Secondary */
+  &[data-variant='secondary'] {
+    color: #00674c;
+    background-color: #fcfcfc;
+    border: 1px solid #00674c;
+
+    &:hover {
+      background-color: #51e8ed3c;
+    }
+  }
+
+  /* Danger */
+  &[data-variant='danger'] {
+    color: #fff;
+    background-color: #ac2727;
+    border: none;
+
+    &:hover {
+      background-color: #ac2727dd;
+    }
+  }
+
+  /* Ghost */
+  &[data-variant='ghost'] {
+    color: #00674c;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      background-color: #c4d2ca;
+    }
+  }
+}

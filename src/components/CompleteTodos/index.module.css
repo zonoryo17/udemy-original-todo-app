@@ -1,10 +1,13 @@
 .container {
   position: relative;
-  border: 2px solid #aacfd0;
+  display: flex;
+  flex-direction: column;
   width: 400px;
   min-height: 200px;
-  padding: 8px;
+  gap: 24px;
   margin: 8px;
+  padding: 8px;
+  border: 2px solid #aacfd0;
   border-radius: 8px;
   background-color: #c9dede;
 }
@@ -29,6 +32,7 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
+
   &:hover {
     background-color: #c4d2ca;
   }
@@ -38,27 +42,14 @@
   text-align: center;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .listRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.button {
-  border-radius: 8px;
-  border: none;
-  padding: 4px 16px;
-  margin: 0px 2px;
-
-  &:hover {
-    background-color: #79a8a9;
-    cursor: pointer;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    &:hover {
-      background-color: #c9c9c95c;
-    }
-  }
 }

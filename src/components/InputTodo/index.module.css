@@ -5,8 +5,8 @@
   background-color: #c6e5d9;
   width: 400px;
   gap: 12px;
-  padding: 8px;
   margin: 8px;
+  padding: 8px;
   border-radius: 8px;
 }
 
@@ -18,10 +18,11 @@
 }
 
 .button {
-  border-radius: 8px;
-  border: none;
+  margin: 0 2px;
   padding: 4px 16px;
-  margin: 0px 2px;
+  background-color: #efefef;
+  border: none;
+  border-radius: 8px;
 
   &:hover {
     background-color: #79a8a9;

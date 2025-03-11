@@ -1,3 +1,4 @@
+import { Button } from '../ui/Button';
 import styles from './index.module.css';
 
 type Props = {
@@ -17,26 +18,22 @@ export const IncompleteTodos: React.FC<Props> = ({
       {incompleteTodos.length === 0 ? (
         <p className={styles.noTodo}>未完了のTODOはありません。</p>
       ) : (
-        <ul>
+        <ul className={styles.list}>
           {incompleteTodos.map((todo, index) => (
             <li key={todo}>
               <div className={styles.listRow}>
                 <p className="todo-item">{todo}</p>
                 <div>
-                  <button
-                    type="button"
-                    className={styles.button}
-                    onClick={() => onClickComplete(index)}
-                  >
+                  <Button type="button" onClick={() => onClickComplete(index)}>
                     完了
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
-                    className={styles.button}
+                    variant="danger"
                     onClick={() => onClickDelete(index)}
                   >
                     削除
-                  </button>
+                  </Button>
                 </div>
               </div>
             </li>

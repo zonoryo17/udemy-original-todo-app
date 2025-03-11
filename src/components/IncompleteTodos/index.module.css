@@ -1,7 +1,10 @@
 .container {
+  display: flex;
+  flex-direction: column;
   border: 2px solid #aacfd0;
   width: 400px;
   min-height: 200px;
+  gap: 24px;
   padding: 8px;
   margin: 8px;
   border-radius: 8px;
@@ -17,27 +20,14 @@
   text-align: center;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .listRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.button {
-  border-radius: 8px;
-  border: none;
-  padding: 4px 16px;
-  margin: 0px 2px;
-
-  &:hover {
-    background-color: #79a8a9;
-    cursor: pointer;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    &:hover {
-      background-color: #c9c9c95c;
-    }
-  }
 }

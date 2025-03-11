@@ -1,6 +1,7 @@
 import type { ChangeEvent } from 'react';
 import { useInputTodo } from './useInputTodo';
 import styles from './index.module.css';
+import { Button } from '../ui/Button';
 
 type Props = {
   todoText: string;
@@ -27,9 +28,9 @@ export const InputTodo: React.FC<Props> = ({
         disabled={disabled}
         className={styles.input}
       />
-      <button type="submit" className={styles.button} disabled={disabled}>
+      <Button type="submit" disabled={disabled}>
         追加
-      </button>
+      </Button>
     </form>
   );
 };
