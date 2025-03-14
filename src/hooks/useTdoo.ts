@@ -42,6 +42,7 @@ export const useTodo = () => {
         id: crypto.randomUUID(),
         text: todoText,
         status: 'done',
+        isEditing: false,
       },
     ]);
     setTodoText('');
