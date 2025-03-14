@@ -1,10 +1,13 @@
+import type { Todo } from '@/types/todo';
 import { Button } from '../ui/Button';
+import { StatusBudge } from '../ui/StatusBudge';
 import styles from './index.module.css';
+import { Icon } from '../ui/Icon';
 
 type Props = {
-  incompleteTodos: string[];
-  onClickDelete: (index: number) => void;
-  onClickComplete: (index: number) => void;
+  incompleteTodos: Todo[];
+  onClickDelete: (id: string) => void;
+  onClickComplete: (id: string) => void;
 };
 
 export const IncompleteTodos: React.FC<Props> = ({
@@ -19,20 +22,27 @@ export const IncompleteTodos: React.FC<Props> = ({
         <p className={styles.noTodo}>未完了のTODOはありません。</p>
       ) : (
         <ul className={styles.list}>
-          {incompleteTodos.map((todo, index) => (
-            <li key={todo}>
+          {incompleteTodos.map((todo) => (
+            <li key={todo.id}>
               <div className={styles.listRow}>
-                <p className="todo-item">{todo}</p>
-                <div>
-                  <Button type="button" onClick={() => onClickComplete(index)}>
-                    完了
+                <div className={styles.listLeftItem}>
+                  <StatusBudge status={todo.status} />
+                  <p className="todo-item">{todo.text}</p>
+                </div>
+                <div className={styles.listRightItem}>
+                  <Button
+                    type="button"
+                    variant="icon"
+                    onClick={() => onClickComplete(todo.id)}
+                  >
+                    <Icon name="edit" color="#3b3b3b" />
                   </Button>
                   <Button
                     type="button"
-                    variant="danger"
-                    onClick={() => onClickDelete(index)}
+                    variant="icon"
+                    onClick={() => onClickDelete(todo.id)}
                   >
-                    削除
+                    <Icon name="trash" />
                   </Button>
                 </div>
               </div>

@@ -2,3 +2,9 @@ body {
   font-family: sans-serif;
   color: #3a3a3a;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}

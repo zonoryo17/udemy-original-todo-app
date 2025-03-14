@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 135px;
+  padding: 4px 24px;
+  border-radius: 16px;
+}
+
+[data-status='todo'] {
+  background-color: #15a789;
+  color: #fff;
+}
+
+[data-status='inProgress'] {
+  background-color: #116c9a;
+  color: #fff;
+}
+
+[data-status='done'] {
+  background-color: #a7a91c;
+  color: #fff;
+}

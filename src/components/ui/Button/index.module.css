@@ -52,13 +52,14 @@
   }
 
   /* Ghost */
-  &[data-variant='ghost'] {
-    color: #00674c;
+  &[data-variant='icon'] {
+    padding: 8px;
     background-color: transparent;
     border: none;
+    border-radius: 50%;
 
     &:hover {
-      background-color: #c4d2ca;
+      background-color: #e2e2e2;
     }
   }
 }

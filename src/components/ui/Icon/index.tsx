@@ -1,13 +1,15 @@
 import type { IconType } from 'react-icons/lib';
 import { BsTrash } from 'react-icons/bs';
+import { BsPencilSquare } from 'react-icons/bs';
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const iconNames = ['trash'] as const;
+export const iconNames = ['trash', 'edit'] as const;
 
 export type IconName = (typeof iconNames)[number];
 
 const map: Record<IconName, IconType> = {
   trash: BsTrash,
+  edit: BsPencilSquare,
 };
 
 type Props = {
@@ -19,8 +21,8 @@ type Props = {
 
 export const Icon: React.FC<Props> = ({
   name,
-  size = 32,
-  color = '#000',
+  size = 18,
+  color = '#444',
   strokeWidth = 0.5,
   ...props
 }) => {

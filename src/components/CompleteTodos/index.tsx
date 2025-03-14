@@ -1,19 +1,17 @@
-import { Button } from '../ui/Button';
+import { useTodo } from '@/hooks/useTdoo';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { Icon } from '../ui/Icon';
 import styles from './index.module.css';
-import { useCompleteTodos } from './useCompleteTodos';
+import type { Todo } from '@/types/todo';
+import { StatusBudge } from '../ui/StatusBudge';
 
 type Props = {
-  completeTodos: string[];
-  onClickBack: (index: number) => void;
+  completeTodos: Todo[];
+  onClickBack: (id: string) => void;
 };
 
-export const CompleteTodos: React.FC<Props> = ({
-  completeTodos,
-  onClickBack,
-}) => {
-  const { handleConfirm } = useCompleteTodos();
+export const CompleteTodos: React.FC<Props> = ({ completeTodos }) => {
+  const { deleteAllTodos } = useTodo();
 
   return (
     <div className={styles.container}>
@@ -23,32 +21,27 @@ export const CompleteTodos: React.FC<Props> = ({
           <ConfirmDialog
             trigger={
               <button type="button" className={styles.icon}>
-                <Icon name="trash" color="#666" size={18} />
+                <Icon name="trash" color="#666" />
               </button>
             }
             title="完了のTODOを全て削除します"
             message="本当に削除してもよろしいですか？"
             confirmLabel="削除"
             theme="danger"
-            onConfirm={handleConfirm}
+            onConfirm={deleteAllTodos}
           />
         )}
       </div>
+
       {completeTodos.length === 0 ? (
         <p className={styles.noTodo}>完了したTODOはありません。</p>
       ) : (
         <ul className={styles.list}>
-          {completeTodos.map((todo, index) => (
-            <li key={todo}>
+          {completeTodos.map((todo) => (
+            <li key={todo.id}>
               <div className={styles.listRow}>
-                <p className="todo-item">{todo}</p>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => onClickBack(index)}
-                >
-                  戻す
-                </Button>
+                <StatusBudge status={todo.status} />
+                <p className="todo-item">{todo.text}</p>
               </div>
             </li>
           ))}

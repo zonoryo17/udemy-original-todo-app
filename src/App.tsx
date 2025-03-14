@@ -9,7 +9,6 @@ export const App: React.FC = () => {
     todoText,
     incompleteTodos,
     completeTodos,
-    isMaxLimitIncompleteTodos,
     onChangeTodoText,
     onClickAdd,
     onClickDelete,
@@ -17,25 +16,29 @@ export const App: React.FC = () => {
     onClickBack,
   } = useTodo();
 
+  const isIncompleteTodosLimit = incompleteTodos.length >= 5;
+
   return (
-    <>
+    <div className="container">
       <InputTodo
         todoText={todoText}
         onChangeTodoText={onChangeTodoText}
         onClickAdd={onClickAdd}
-        disabled={isMaxLimitIncompleteTodos}
+        disabled={isIncompleteTodosLimit}
       />
-      {isMaxLimitIncompleteTodos && (
+
+      {isIncompleteTodosLimit && (
         <p style={{ color: 'red' }}>
           登録できるTODOは5個までだよ〜。消化しろ〜。
         </p>
       )}
+
       <IncompleteTodos
         incompleteTodos={incompleteTodos}
         onClickDelete={onClickDelete}
         onClickComplete={onClickComplete}
       />
       <CompleteTodos completeTodos={completeTodos} onClickBack={onClickBack} />
-    </>
+    </div>
   );
 };

@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   border: 2px solid #aacfd0;
-  width: 400px;
   min-height: 200px;
   gap: 24px;
   padding: 8px;
@@ -30,4 +29,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.listLeftItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.listRightItem {
+  display: flex;
 }

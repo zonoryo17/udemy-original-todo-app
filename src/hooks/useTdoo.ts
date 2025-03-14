@@ -1,17 +1,29 @@
-import { type ChangeEvent, useState } from 'react';
+import type { Todo } from '@/types/todo';
+import { getLocalStorage } from '@/utils/localStorage';
+import { type ChangeEvent, useEffect, useState } from 'react';
+
+const localStorageIncompleteTodos: Todo[] = getLocalStorage('incompleteTodos');
+const localStorageCompleteTodos: Todo[] = getLocalStorage('completeTodos');
 
 export const useTodo = () => {
   /**
    * State
    */
   const [todoText, setTodoText] = useState('');
-  const [incompleteTodos, setIncompleteTodos] = useState<string[]>([]);
-  const [completeTodos, setCompleteTodos] = useState<string[]>([]);
+  const [incompleteTodos, setIncompleteTodos] = useState<Todo[]>(
+    localStorageIncompleteTodos
+  );
+  const [completeTodos, setCompleteTodos] = useState<Todo[]>(
+    localStorageCompleteTodos
+  );
 
   /**
-   * Constants
+   * Effects
    */
-  const isMaxLimitIncompleteTodos = incompleteTodos.length >= 5;
+  useEffect(() => {
+    localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos));
+    localStorage.setItem('completeTodos', JSON.stringify(completeTodos));
+  }, [incompleteTodos, completeTodos]);
 
   /**
    * Methods
@@ -22,44 +34,66 @@ export const useTodo = () => {
 
   const onClickAdd = () => {
     if (todoText.trim() === '') return;
-    const newTodos = [...incompleteTodos, todoText];
-    setIncompleteTodos(newTodos);
+
+    localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos));
+    setIncompleteTodos((prevTodos) => [
+      ...prevTodos,
+      {
+        id: crypto.randomUUID(),
+        text: todoText,
+        status: 'done',
+      },
+    ]);
     setTodoText('');
   };
 
-  const onClickDelete = (index: number) => {
+  const onClickDelete = (id: string) => {
+    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    if (!targetIncompleteTodo) return;
+
     const newTodos = [...incompleteTodos];
-    newTodos.splice(index, 1);
+    newTodos.splice(incompleteTodos.indexOf(targetIncompleteTodo), 1);
     setIncompleteTodos(newTodos);
   };
 
-  const onClickComplete = (index: number) => {
-    const newIncompleteTodos = [...incompleteTodos];
-    newIncompleteTodos.splice(index, 1);
+  const onClickComplete = (id: string) => {
+    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    if (!targetIncompleteTodo) return;
 
-    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(incompleteTodos.indexOf(targetIncompleteTodo), 1);
+
+    const newCompleteTodos = [...completeTodos, targetIncompleteTodo];
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
   };
 
-  const onClickBack = (index: number) => {
-    const newCompleteTodos = [...completeTodos];
-    newCompleteTodos.splice(index, 1);
+  const onClickBack = (id: string) => {
+    const targetCompleteTodo = completeTodos.find((todo) => todo.id === id);
+    if (!targetCompleteTodo) return;
 
-    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(completeTodos.indexOf(targetCompleteTodo), 1);
+
+    const newIncompleteTodos = [...incompleteTodos, targetCompleteTodo];
     setCompleteTodos(newCompleteTodos);
     setIncompleteTodos(newIncompleteTodos);
+  };
+
+  const deleteAllTodos = () => {
+    localStorage.setItem('completeTodos', JSON.stringify([]));
+    setCompleteTodos([]);
   };
 
   return {
     todoText,
     incompleteTodos,
     completeTodos,
-    isMaxLimitIncompleteTodos,
     onChangeTodoText,
     onClickAdd,
     onClickDelete,
     onClickComplete,
     onClickBack,
+    deleteAllTodos,
   };
 };
