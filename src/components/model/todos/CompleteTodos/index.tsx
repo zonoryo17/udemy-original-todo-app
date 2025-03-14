@@ -1,9 +1,9 @@
-import { useTodo } from '@/hooks/useTdoo';
-import { ConfirmDialog } from '../ui/ConfirmDialog';
-import { Icon } from '../ui/Icon';
+import { useTodo } from '@/components/model/todos/useTodo';
+import { ConfirmDialog } from '../../../ui/ConfirmDialog';
+import { Icon } from '../../../ui/Icon';
 import styles from './index.module.css';
 import type { Todo } from '@/types/todo';
-import { StatusBudge } from '../ui/StatusBudge';
+import { StatusBudge } from '../../../ui/StatusBudge';
 
 type Props = {
   completeTodos: Todo[];

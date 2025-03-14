@@ -1,7 +1,7 @@
-import { CompleteTodos } from './components/CompleteTodos';
-import { IncompleteTodos } from './components/IncompleteTodos';
-import { InputTodo } from './components/InputTodo';
-import { useTodo } from './hooks/useTdoo';
+import { CompleteTodos } from './components/model/todos/CompleteTodos';
+import { IncompleteTodos } from './components/model/todos/IncompleteTodos';
+import { InputTodo } from './components/model/todos/InputTodo';
+import { useTodo } from './components/model/todos/useTodo';
 import './styles.css';
 
 export const App: React.FC = () => {

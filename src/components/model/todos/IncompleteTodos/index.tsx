@@ -1,8 +1,8 @@
 import type { Todo } from '@/types/todo';
-import { Button } from '../ui/Button';
-import { StatusBudge } from '../ui/StatusBudge';
+import { Button } from '../../../ui/Button';
+import { StatusBudge } from '../../../ui/StatusBudge';
 import styles from './index.module.css';
-import { Icon } from '../ui/Icon';
+import { Icon } from '../../../ui/Icon';
 
 type Props = {
   incompleteTodos: Todo[];
