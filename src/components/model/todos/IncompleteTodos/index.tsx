@@ -6,12 +6,14 @@ type Props = {
   incompleteTodos: Todo[];
   onClickDelete: (id: string) => void;
   onClickEdit: (id: string) => void;
+  onClickSave: (id: string) => void;
 };
 
 export const IncompleteTodos: React.FC<Props> = ({
   incompleteTodos,
   onClickDelete,
   onClickEdit,
+  onClickSave,
 }) => {
   return (
     <div className={styles.container}>
@@ -26,6 +28,7 @@ export const IncompleteTodos: React.FC<Props> = ({
               item={todo}
               onClickDelete={onClickDelete}
               onClickEdit={onClickEdit}
+              onClickSave={onClickSave}
             />
           ))}
         </ul>

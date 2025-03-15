@@ -51,6 +51,17 @@
     }
   }
 
+  /* Cancel */
+  &[data-variant='cancel'] {
+    color: #fff;
+    background-color: #525252;
+    border: none;
+
+    &:hover {
+      background-color: #656565;
+    }
+  }
+
   /* Ghost */
   &[data-variant='icon'] {
     padding: 8px;

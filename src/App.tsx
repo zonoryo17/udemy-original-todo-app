@@ -7,15 +7,15 @@ import './styles.css';
 export const App: React.FC = () => {
   const {
     todoText,
-    incompleteTodos,
-    completeTodos,
+    todos,
     onChangeTodoText,
     onClickAdd,
     onClickDelete,
     onClickEdit,
-    onClickBack,
+    onClickSave,
   } = useTodo();
-
+  const incompleteTodos = todos.filter((todo) => todo.status !== 'done');
+  const completeTodos = todos.filter((todo) => todo.status === 'done');
   const isIncompleteTodosLimit = incompleteTodos.length >= 5;
 
   return (
@@ -37,8 +37,13 @@ export const App: React.FC = () => {
         incompleteTodos={incompleteTodos}
         onClickDelete={onClickDelete}
         onClickEdit={onClickEdit}
+        onClickSave={onClickSave}
       />
-      <CompleteTodos completeTodos={completeTodos} onClickBack={onClickBack} />
+      <CompleteTodos
+        completeTodos={completeTodos}
+        onClickEdit={onClickEdit}
+        onClickSave={onClickSave}
+      />
     </div>
   );
 };

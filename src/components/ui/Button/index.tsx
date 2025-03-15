@@ -1,6 +1,6 @@
 import styles from './index.module.css';
 
-type Variant = 'primary' | 'secondary' | 'danger' | 'icon';
+type Variant = 'primary' | 'secondary' | 'danger' | 'cancel' | 'icon';
 
 type Props = {
   variant?: Variant;

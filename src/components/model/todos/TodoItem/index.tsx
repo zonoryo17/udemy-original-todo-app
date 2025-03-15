@@ -3,17 +3,20 @@ import { Icon } from '@/components/ui/Icon';
 import { StatusBudge } from '@/components/ui/StatusBudge';
 import styles from './index.module.css';
 import type { Todo } from '@/types/todo';
+import { EditTodoDialog } from '../EditTodoDialog';
 
 type Props = {
   item: Todo;
-  onClickDelete: (id: string) => void;
   onClickEdit: (id: string) => void;
+  onClickSave: (id: string) => void;
+  onClickDelete?: (id: string) => void;
 };
 
 export const TodoItem: React.FC<Props> = ({
   item,
-  onClickDelete,
   onClickEdit,
+  onClickSave,
+  onClickDelete,
 }) => {
   return (
     <li key={item.id}>
@@ -23,20 +26,28 @@ export const TodoItem: React.FC<Props> = ({
           <p className="todo-item">{item.text}</p>
         </div>
         <div className={styles.listRightItem}>
-          <Button
-            type="button"
-            variant="icon"
-            onClick={() => onClickEdit(item.id)}
-          >
-            <Icon name="edit" color="#3b3b3b" />
-          </Button>
-          <Button
-            type="button"
-            variant="icon"
-            onClick={() => onClickDelete(item.id)}
-          >
-            <Icon name="trash" />
-          </Button>
+          <EditTodoDialog
+            trigger={
+              <Button
+                type="button"
+                variant="icon"
+                onClick={() => onClickEdit(item.id)}
+              >
+                <Icon name="edit" color="#3b3b3b" />
+              </Button>
+            }
+            body={<p>編集内容</p>}
+            onSave={() => onClickSave(item.id)}
+          />
+          {item.status !== 'done' && (
+            <Button
+              type="button"
+              variant="icon"
+              onClick={() => onClickDelete?.(item.id) || undefined}
+            >
+              <Icon name="trash" />
+            </Button>
+          )}
         </div>
       </div>
     </li>

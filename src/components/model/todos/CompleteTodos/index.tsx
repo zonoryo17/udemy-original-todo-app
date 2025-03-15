@@ -1,18 +1,22 @@
-import { useTodo } from '@/components/model/todos/useTodo';
 import { ConfirmDialog } from '../../../ui/ConfirmDialog';
 import { Icon } from '../../../ui/Icon';
 import styles from './index.module.css';
 import type { Todo } from '@/types/todo';
-import { StatusBudge } from '../../../ui/StatusBudge';
+import { TodoItem } from '../TodoItem';
 
 type Props = {
   completeTodos: Todo[];
-  onClickBack: (id: string) => void;
+  onClickEdit: (id: string) => void;
+  onClickSave: (id: string) => void;
+  deleteAllTodos: () => void;
 };
 
-export const CompleteTodos: React.FC<Props> = ({ completeTodos }) => {
-  const { deleteAllTodos } = useTodo();
-
+export const CompleteTodos: React.FC<Props> = ({
+  completeTodos,
+  onClickEdit,
+  onClickSave,
+  deleteAllTodos,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.headerWrapper}>
@@ -38,12 +42,12 @@ export const CompleteTodos: React.FC<Props> = ({ completeTodos }) => {
       ) : (
         <ul className={styles.list}>
           {completeTodos.map((todo) => (
-            <li key={todo.id}>
-              <div className={styles.listRow}>
-                <StatusBudge status={todo.status} />
-                <p className="todo-item">{todo.text}</p>
-              </div>
-            </li>
+            <TodoItem
+              key={todo.id}
+              item={todo}
+              onClickEdit={onClickEdit}
+              onClickSave={onClickSave}
+            />
           ))}
         </ul>
       )}

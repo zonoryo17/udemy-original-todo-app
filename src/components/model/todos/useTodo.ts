@@ -2,28 +2,21 @@ import type { Todo } from '@/types/todo';
 import { getLocalStorage } from '@/utils/localStorage';
 import { type ChangeEvent, useEffect, useState } from 'react';
 
-const localStorageIncompleteTodos: Todo[] = getLocalStorage('incompleteTodos');
-const localStorageCompleteTodos: Todo[] = getLocalStorage('completeTodos');
+const localStorageTodos: Todo[] = getLocalStorage('todos');
 
 export const useTodo = () => {
   /**
    * State
    */
   const [todoText, setTodoText] = useState('');
-  const [incompleteTodos, setIncompleteTodos] = useState<Todo[]>(
-    localStorageIncompleteTodos
-  );
-  const [completeTodos, setCompleteTodos] = useState<Todo[]>(
-    localStorageCompleteTodos
-  );
+  const [todos, setTodos] = useState<Todo[]>(localStorageTodos);
 
   /**
    * Effects
    */
   useEffect(() => {
-    localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos));
-    localStorage.setItem('completeTodos', JSON.stringify(completeTodos));
-  }, [incompleteTodos, completeTodos]);
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   /**
    * Methods
@@ -35,8 +28,8 @@ export const useTodo = () => {
   const onClickAdd = () => {
     if (todoText.trim() === '') return;
 
-    localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos));
-    setIncompleteTodos((prevTodos) => [
+    localStorage.setItem('todos', JSON.stringify(todos));
+    setTodos((prevTodos) => [
       ...prevTodos,
       {
         id: crypto.randomUUID(),
@@ -49,67 +42,65 @@ export const useTodo = () => {
   };
 
   const onClickEdit = (id: string) => {
-    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
     if (!targetIncompleteTodo) return;
 
-    const newTodos = [...incompleteTodos];
-    const targetIndex = incompleteTodos.indexOf(targetIncompleteTodo);
+    const newTodos = [...todos];
+    const targetIndex = todos.indexOf(targetIncompleteTodo);
     newTodos[targetIndex] = {
       ...targetIncompleteTodo,
       isEditing: true,
     };
-    setIncompleteTodos(newTodos);
-    console.log(incompleteTodos);
+    setTodos(newTodos);
+    console.log(todos);
   };
 
   const onClickDelete = (id: string) => {
-    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
     if (!targetIncompleteTodo) return;
 
-    const newTodos = [...incompleteTodos];
-    newTodos.splice(incompleteTodos.indexOf(targetIncompleteTodo), 1);
-    setIncompleteTodos(newTodos);
+    const newTodos = [...todos];
+    newTodos.splice(todos.indexOf(targetIncompleteTodo), 1);
+    setTodos(newTodos);
   };
 
   const onClickComplete = (id: string) => {
-    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
     if (!targetIncompleteTodo) return;
 
-    const newIncompleteTodos = [...incompleteTodos];
-    newIncompleteTodos.splice(incompleteTodos.indexOf(targetIncompleteTodo), 1);
+    const newtodos = [...todos];
+    newtodos.splice(todos.indexOf(targetIncompleteTodo), 1);
 
-    const newCompleteTodos = [...completeTodos, targetIncompleteTodo];
-    setIncompleteTodos(newIncompleteTodos);
-    setCompleteTodos(newCompleteTodos);
-  };
-
-  const onClickBack = (id: string) => {
-    const targetCompleteTodo = completeTodos.find((todo) => todo.id === id);
-    if (!targetCompleteTodo) return;
-
-    const newCompleteTodos = [...completeTodos];
-    newCompleteTodos.splice(completeTodos.indexOf(targetCompleteTodo), 1);
-
-    const newIncompleteTodos = [...incompleteTodos, targetCompleteTodo];
-    setCompleteTodos(newCompleteTodos);
-    setIncompleteTodos(newIncompleteTodos);
+    setTodos(newtodos);
   };
 
   const deleteAllTodos = () => {
-    localStorage.setItem('completeTodos', JSON.stringify([]));
-    setCompleteTodos([]);
+    localStorage.setItem('todos', JSON.stringify([]));
+    setTodos([]);
+  };
+
+  const onClickSave = (id: string) => {
+    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
+    if (!targetIncompleteTodo) return;
+
+    const newTodos = [...todos];
+    const targetIndex = todos.indexOf(targetIncompleteTodo);
+    newTodos[targetIndex] = {
+      ...targetIncompleteTodo,
+      isEditing: false,
+    };
+    setTodos(newTodos);
   };
 
   return {
     todoText,
-    incompleteTodos,
-    completeTodos,
+    todos,
     onChangeTodoText,
     onClickAdd,
     onClickEdit,
     onClickDelete,
     onClickComplete,
-    onClickBack,
     deleteAllTodos,
+    onClickSave,
   };
 };
