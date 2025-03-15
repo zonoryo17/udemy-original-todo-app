@@ -12,7 +12,7 @@ export const App: React.FC = () => {
     onChangeTodoText,
     onClickAdd,
     onClickDelete,
-    onClickComplete,
+    onClickEdit,
     onClickBack,
   } = useTodo();
 
@@ -36,7 +36,7 @@ export const App: React.FC = () => {
       <IncompleteTodos
         incompleteTodos={incompleteTodos}
         onClickDelete={onClickDelete}
-        onClickComplete={onClickComplete}
+        onClickEdit={onClickEdit}
       />
       <CompleteTodos completeTodos={completeTodos} onClickBack={onClickBack} />
     </div>

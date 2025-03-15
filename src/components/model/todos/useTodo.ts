@@ -41,11 +41,25 @@ export const useTodo = () => {
       {
         id: crypto.randomUUID(),
         text: todoText,
-        status: 'done',
+        status: 'todo',
         isEditing: false,
       },
     ]);
     setTodoText('');
+  };
+
+  const onClickEdit = (id: string) => {
+    const targetIncompleteTodo = incompleteTodos.find((todo) => todo.id === id);
+    if (!targetIncompleteTodo) return;
+
+    const newTodos = [...incompleteTodos];
+    const targetIndex = incompleteTodos.indexOf(targetIncompleteTodo);
+    newTodos[targetIndex] = {
+      ...targetIncompleteTodo,
+      isEditing: true,
+    };
+    setIncompleteTodos(newTodos);
+    console.log(incompleteTodos);
   };
 
   const onClickDelete = (id: string) => {
@@ -92,6 +106,7 @@ export const useTodo = () => {
     completeTodos,
     onChangeTodoText,
     onClickAdd,
+    onClickEdit,
     onClickDelete,
     onClickComplete,
     onClickBack,
