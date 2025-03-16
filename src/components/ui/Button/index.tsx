@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import styles from './index.module.css';
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'cancel' | 'icon';
@@ -6,7 +7,7 @@ type Props = {
   variant?: Variant;
 } & React.ComponentProps<'button'>;
 
-export const Button: React.FC<Props> = (props) => {
+export const Button: React.FC<Props> = memo((props) => {
   const {
     type = 'button',
     variant = 'primary',
@@ -27,4 +28,4 @@ export const Button: React.FC<Props> = (props) => {
       {children}
     </button>
   );
-};
+});

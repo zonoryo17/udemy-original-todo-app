@@ -1,22 +1,13 @@
 import type { Todo } from '@/types/todo';
-import { getLocalStorage } from '@/utils/localStorage';
-import { type ChangeEvent, useEffect, useState } from 'react';
-
-const localStorageTodos: Todo[] = getLocalStorage('todos');
+import { type ChangeEvent, useCallback, useState } from 'react';
 
 export const useTodo = () => {
   /**
    * State
    */
   const [todoText, setTodoText] = useState('');
-  const [todos, setTodos] = useState<Todo[]>(localStorageTodos);
-
-  /**
-   * Effects
-   */
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+  // TODO: incompleteTodosとcompleteTodosは分けたほうが再レンダリングを抑えられる
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   /**
    * Methods
@@ -25,10 +16,9 @@ export const useTodo = () => {
     setTodoText(event.target.value);
   };
 
-  const onClickAdd = () => {
+  const onClickAdd = useCallback(() => {
     if (todoText.trim() === '') return;
 
-    localStorage.setItem('todos', JSON.stringify(todos));
     setTodos((prevTodos) => [
       ...prevTodos,
       {
@@ -39,58 +29,45 @@ export const useTodo = () => {
       },
     ]);
     setTodoText('');
-  };
+  }, [todoText]);
 
-  const onClickEdit = (id: string) => {
-    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
-    if (!targetIncompleteTodo) return;
+  const onClickEdit = useCallback((id: string) => {
+    setTodos((prevTodos) =>
+      [...prevTodos].map((todo) =>
+        todo.id === id ? { ...todo, isEditing: true } : todo
+      )
+    );
+  }, []);
 
-    const newTodos = [...todos];
-    const targetIndex = todos.indexOf(targetIncompleteTodo);
-    newTodos[targetIndex] = {
-      ...targetIncompleteTodo,
-      isEditing: true,
-    };
+  const onClickDelete = useCallback(
+    (id: string) => {
+      const targetIncompleteTodo = todos.find((todo) => todo.id === id);
+      if (!targetIncompleteTodo) return;
+
+      const newTodos = [...todos];
+      newTodos.splice(todos.indexOf(targetIncompleteTodo), 1);
+      setTodos(newTodos);
+    },
+    [todos]
+  );
+
+  const handleClickDeleteAllItems = useCallback(() => {
+    const newTodos = todos.filter((todo) => todo.status !== 'done');
     setTodos(newTodos);
-    console.log(todos);
-  };
+  }, [todos]);
 
-  const onClickDelete = (id: string) => {
-    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
-    if (!targetIncompleteTodo) return;
+  const onClickSave = useCallback(
+    (id: string) => {
+      const targetTodo = todos.find((todo) => todo.id === id);
+      if (!targetTodo) return;
 
-    const newTodos = [...todos];
-    newTodos.splice(todos.indexOf(targetIncompleteTodo), 1);
-    setTodos(newTodos);
-  };
+      const newTodos = [...todos, { ...targetTodo, isEditing: false }];
+      setTodos(newTodos);
+    },
+    [todos]
+  );
 
-  const onClickComplete = (id: string) => {
-    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
-    if (!targetIncompleteTodo) return;
-
-    const newtodos = [...todos];
-    newtodos.splice(todos.indexOf(targetIncompleteTodo), 1);
-
-    setTodos(newtodos);
-  };
-
-  const deleteAllTodos = () => {
-    localStorage.setItem('todos', JSON.stringify([]));
-    setTodos([]);
-  };
-
-  const onClickSave = (id: string) => {
-    const targetIncompleteTodo = todos.find((todo) => todo.id === id);
-    if (!targetIncompleteTodo) return;
-
-    const newTodos = [...todos];
-    const targetIndex = todos.indexOf(targetIncompleteTodo);
-    newTodos[targetIndex] = {
-      ...targetIncompleteTodo,
-      isEditing: false,
-    };
-    setTodos(newTodos);
-  };
+  console.log(todos);
 
   return {
     todoText,
@@ -99,8 +76,7 @@ export const useTodo = () => {
     onClickAdd,
     onClickEdit,
     onClickDelete,
-    onClickComplete,
-    deleteAllTodos,
+    handleClickDeleteAllItems,
     onClickSave,
   };
 };

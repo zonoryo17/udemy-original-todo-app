@@ -1,6 +1,7 @@
 import type { IconType } from 'react-icons/lib';
 import { BsTrash } from 'react-icons/bs';
 import { BsPencilSquare } from 'react-icons/bs';
+import { memo } from 'react';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const iconNames = ['trash', 'edit'] as const;
@@ -19,22 +20,18 @@ type Props = {
   strokeWidth?: number;
 };
 
-export const Icon: React.FC<Props> = ({
-  name,
-  size = 18,
-  color = '#444',
-  strokeWidth = 0.5,
-  ...props
-}) => {
-  const Icon = map[name];
+export const Icon: React.FC<Props> = memo(
+  ({ name, size = 18, color = '#444', strokeWidth = 0.5, ...props }) => {
+    const Icon = map[name];
 
-  return (
-    <Icon
-      role="img"
-      size={size}
-      color={color}
-      strokeWidth={strokeWidth}
-      {...props}
-    />
-  );
-};
+    return (
+      <Icon
+        role="img"
+        size={size}
+        color={color}
+        strokeWidth={strokeWidth}
+        {...props}
+      />
+    );
+  }
+);
