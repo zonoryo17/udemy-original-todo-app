@@ -7,7 +7,8 @@ export const useTodo = () => {
    */
   const [todoText, setTodoText] = useState('');
   // TODO: incompleteTodosとcompleteTodosは分けたほうが再レンダリングを抑えられる
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [incompleteTodos, setIncompleteTodos] = useState<Todo[]>([]);
+  const [completeTodos, setCompleteTodos] = useState<Todo[]>([]);
 
   /**
    * Methods
@@ -19,7 +20,7 @@ export const useTodo = () => {
   const onClickAdd = useCallback(() => {
     if (todoText.trim() === '') return;
 
-    setTodos((prevTodos) => [
+    setIncompleteTodos((prevTodos) => [
       ...prevTodos,
       {
         id: crypto.randomUUID(),
@@ -31,52 +32,65 @@ export const useTodo = () => {
     setTodoText('');
   }, [todoText]);
 
-  const onClickEdit = useCallback((id: string) => {
-    setTodos((prevTodos) =>
-      [...prevTodos].map((todo) =>
-        todo.id === id ? { ...todo, isEditing: true } : todo
-      )
+  const onClickEdit = useCallback((todo: Todo) => {
+    setIncompleteTodos((prevTodos) =>
+      prevTodos.map((t) => (t.id === todo.id ? { ...t, isEditing: true } : t))
     );
   }, []);
 
   const onClickDelete = useCallback(
     (id: string) => {
-      const targetIncompleteTodo = todos.find((todo) => todo.id === id);
+      const targetIncompleteTodo = incompleteTodos.find(
+        (todo) => todo.id === id
+      );
       if (!targetIncompleteTodo) return;
 
-      const newTodos = [...todos];
-      newTodos.splice(todos.indexOf(targetIncompleteTodo), 1);
-      setTodos(newTodos);
+      const newTodos = [...incompleteTodos];
+      newTodos.splice(incompleteTodos.indexOf(targetIncompleteTodo), 1);
+      setIncompleteTodos(newTodos);
     },
-    [todos]
+    [incompleteTodos]
   );
 
   const handleClickDeleteAllItems = useCallback(() => {
-    const newTodos = todos.filter((todo) => todo.status !== 'done');
-    setTodos(newTodos);
-  }, [todos]);
+    const newTodos = completeTodos.filter((todo) => todo.status !== 'done');
+    setCompleteTodos(newTodos);
+  }, [completeTodos]);
 
   const onClickSave = useCallback(
     (id: string) => {
-      const targetTodo = todos.find((todo) => todo.id === id);
+      const targetTodo = incompleteTodos.find((todo) => todo.id === id);
       if (!targetTodo) return;
 
-      const newTodos = [...todos, { ...targetTodo, isEditing: false }];
-      setTodos(newTodos);
+      const newTodos = [
+        ...incompleteTodos,
+        { ...targetTodo, isEditing: false },
+      ];
+      setIncompleteTodos(newTodos);
     },
-    [todos]
+    [incompleteTodos]
   );
 
-  console.log(todos);
+  const handleClickEditCancel = useCallback((id: string) => {
+    setIncompleteTodos((prevTodos) =>
+      [...prevTodos].map((todo) =>
+        todo.id === id ? { ...todo, isEditing: false } : todo
+      )
+    );
+  }, []);
+
+  console.log(incompleteTodos, completeTodos);
 
   return {
     todoText,
-    todos,
+    incompleteTodos,
+    completeTodos,
     onChangeTodoText,
     onClickAdd,
     onClickEdit,
     onClickDelete,
     handleClickDeleteAllItems,
     onClickSave,
+    handleClickEditCancel,
   };
 };

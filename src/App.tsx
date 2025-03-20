@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { CompleteTodos } from './components/model/todos/CompleteTodos';
 import { IncompleteTodos } from './components/model/todos/IncompleteTodos';
 import { InputTodo } from './components/model/todos/InputTodo';
@@ -8,22 +7,17 @@ import './styles.css';
 export const App: React.FC = () => {
   const {
     todoText,
-    todos,
+    incompleteTodos,
+    completeTodos,
     onChangeTodoText,
     onClickAdd,
     onClickDelete,
     onClickEdit,
     onClickSave,
     handleClickDeleteAllItems,
+    handleClickEditCancel,
   } = useTodo();
-  const incompleteTodos = useMemo(
-    () => todos.filter((todo) => todo.status !== 'done'),
-    [todos]
-  );
-  const completeTodos = useMemo(
-    () => todos.filter((todo) => todo.status === 'done'),
-    [todos]
-  );
+
   const isIncompleteTodosLimit = incompleteTodos.length >= 5;
 
   return (
@@ -46,12 +40,14 @@ export const App: React.FC = () => {
         onClickDelete={onClickDelete}
         onClickEdit={onClickEdit}
         onClickSave={onClickSave}
+        onClickEditCancel={handleClickEditCancel}
       />
       <CompleteTodos
         completeTodos={completeTodos}
         onClickEdit={onClickEdit}
         onClickSave={onClickSave}
         onClickDeleteAllItems={handleClickDeleteAllItems}
+        onClickEditCancel={handleClickEditCancel}
       />
     </div>
   );

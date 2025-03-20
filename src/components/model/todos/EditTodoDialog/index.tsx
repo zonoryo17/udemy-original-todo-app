@@ -26,7 +26,7 @@ export const EditTodoDialog: React.FC<Props> = memo(
           <Dialog.Positioner>
             <Dialog.Content>
               <Dialog.Header>
-                <Dialog.Title>Dialog Title</Dialog.Title>
+                <Dialog.Title>Todo編集画面</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body>{body}</Dialog.Body>
               <Dialog.Footer>

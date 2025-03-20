@@ -7,13 +7,20 @@ import { memo } from 'react';
 
 type Props = {
   completeTodos: Todo[];
-  onClickEdit: (id: string) => void;
+  onClickEdit: (id: Todo) => void;
   onClickSave: (id: string) => void;
   onClickDeleteAllItems: () => void;
+  onClickEditCancel: (id: string) => void;
 };
 
 export const CompleteTodos: React.FC<Props> = memo(
-  ({ completeTodos, onClickEdit, onClickSave, onClickDeleteAllItems }) => {
+  ({
+    completeTodos,
+    onClickEdit,
+    onClickSave,
+    onClickDeleteAllItems,
+    onClickEditCancel,
+  }) => {
     return (
       <div className={styles.container}>
         <div className={styles.headerWrapper}>
@@ -44,6 +51,7 @@ export const CompleteTodos: React.FC<Props> = memo(
                 item={todo}
                 onClickEdit={onClickEdit}
                 onClickSave={onClickSave}
+                onClickEditCancel={onClickEditCancel}
               />
             ))}
           </ul>

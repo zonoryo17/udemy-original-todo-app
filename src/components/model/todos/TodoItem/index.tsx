@@ -1,20 +1,22 @@
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
-import { StatusBudge } from '@/components/ui/StatusBudge';
 import styles from './index.module.css';
 import type { Todo } from '@/types/todo';
 import { EditTodoDialog } from '../EditTodoDialog';
 import { memo } from 'react';
+import { EditingTodoItem } from '../EditingTodoItem';
+import { StatusBudge } from '@/components/ui/StatusBudge';
 
 type Props = {
   item: Todo;
-  onClickEdit: (id: string) => void;
+  onClickEdit: (id: Todo) => void;
   onClickSave: (id: string) => void;
   onClickDelete?: (id: string) => void;
+  onClickEditCancel: (id: string) => void;
 };
 
 export const TodoItem: React.FC<Props> = memo(
-  ({ item, onClickEdit, onClickSave, onClickDelete }) => {
+  ({ item, onClickEdit, onClickSave, onClickDelete, onClickEditCancel }) => {
     return (
       <li key={item.id}>
         <div className={styles.listRow}>
@@ -28,12 +30,17 @@ export const TodoItem: React.FC<Props> = memo(
                 <Button
                   type="button"
                   variant="icon"
-                  onClick={() => onClickEdit(item.id)}
+                  onClick={() => onClickEdit(item)}
                 >
                   <Icon name="edit" color="#3b3b3b" />
                 </Button>
               }
-              body={<p>編集内容</p>}
+              body={
+                <EditingTodoItem
+                  item={item}
+                  onClickEditCancel={onClickEditCancel}
+                />
+              }
               onSave={() => onClickSave(item.id)}
             />
             {item.status !== 'done' && (

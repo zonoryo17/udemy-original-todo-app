@@ -1,39 +1,29 @@
-import { Button } from '@/components/ui/Button';
 import styles from './index.module.css';
 import type { Todo } from '@/types/todo';
 import { StatusSelectMenu } from '../StatusSelectMenu';
 
 type Props = {
   item: Todo;
-  onClickCancel: () => void;
-  onClickSave: (id: string) => void;
+  onClickEditCancel: (id: string) => void;
 };
 
-export const EditingTodoItem: React.FC<Props> = ({
-  item,
-  onClickCancel,
-  onClickSave,
-}) => {
+export const EditingTodoItem: React.FC<Props> = ({ item }) => {
   return (
-    <li key={item.id}>
-      <div className={styles.listRow}>
-        <div className={styles.listLeftItem}>
+    <div className={styles.listRow}>
+      <div className={styles.listLeftItem}>
+        <div className={styles.editBlock}>
+          <p className={styles.title}>Status</p>
           <StatusSelectMenu />
-          <p className="todo-item">{item.text}</p>
         </div>
-        <div className={styles.listRightItem}>
-          <Button type="button" variant="icon" onClick={onClickCancel}>
-            キャンセル
-          </Button>
-          <Button
-            type="button"
-            variant="icon"
-            onClick={() => onClickSave(item.id)}
-          >
-            保存
-          </Button>
+        <div className={styles.editBlock}>
+          <p className={styles.title}>Text</p>
+          <input
+            type="text"
+            defaultValue={item.text}
+            className={styles.input}
+          />
         </div>
       </div>
-    </li>
+    </div>
   );
 };

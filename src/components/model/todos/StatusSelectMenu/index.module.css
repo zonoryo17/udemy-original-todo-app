@@ -5,6 +5,7 @@
 }
 
 .selectItem {
+  position: relative;
   &:hover {
     cursor: pointer;
   }

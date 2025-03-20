@@ -6,12 +6,19 @@ import type { Todo } from '@/types/todo';
 type Props = {
   incompleteTodos: Todo[];
   onClickDelete: (id: string) => void;
-  onClickEdit: (id: string) => void;
+  onClickEdit: (todo: Todo) => void;
   onClickSave: (id: string) => void;
+  onClickEditCancel: (id: string) => void;
 };
 
 export const IncompleteTodos: React.FC<Props> = memo(
-  ({ incompleteTodos, onClickDelete, onClickEdit, onClickSave }) => {
+  ({
+    incompleteTodos,
+    onClickDelete,
+    onClickEdit,
+    onClickSave,
+    onClickEditCancel,
+  }) => {
     return (
       <div className={styles.container}>
         <p className={styles.title}>未完了のTODO</p>
@@ -26,6 +33,7 @@ export const IncompleteTodos: React.FC<Props> = memo(
                 onClickDelete={onClickDelete}
                 onClickEdit={onClickEdit}
                 onClickSave={onClickSave}
+                onClickEditCancel={onClickEditCancel}
               />
             ))}
           </ul>

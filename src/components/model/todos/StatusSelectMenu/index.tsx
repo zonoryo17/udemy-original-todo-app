@@ -17,6 +17,13 @@ type Framework = {
   component: React.ReactNode;
 };
 
+type Props = {
+  selectRef?:
+    | React.RefObject<HTMLDivElement>
+    | ((instance: HTMLDivElement | null) => void)
+    | null;
+};
+
 const frameworks = createListCollection({
   items: [
     { label: 'Todo', value: 'todo', component: <StatusBudge status="todo" /> },
@@ -32,6 +39,7 @@ const frameworks = createListCollection({
 const SelectTrigger = () => {
   const select = useSelectContext();
   const items = select.selectedItems as Framework[];
+
   return (
     <button className={styles.button} {...select.getTriggerProps()}>
       {select.hasSelectedItems ? items[0].component : <RiForbidLine />}
@@ -39,13 +47,12 @@ const SelectTrigger = () => {
   );
 };
 
-export const StatusSelectMenu: React.FC = () => {
+export const StatusSelectMenu: React.FC<Props> = ({ selectRef }) => {
   return (
     <Select.Root
       positioning={{ sameWidth: false }}
       collection={frameworks}
       size="sm"
-      width="320px"
       defaultValue={['todo']}
     >
       <Select.HiddenSelect />
@@ -54,14 +61,15 @@ export const StatusSelectMenu: React.FC = () => {
       </Select.Control>
       <Portal>
         <Select.Positioner>
-          <Select.Content minW="32">
-            {frameworks.items.map((movie) => (
+          <Select.Content minW="32" zIndex={9999}>
+            {frameworks.items.map((item) => (
               <Select.Item
-                item={movie}
-                key={movie.value}
+                item={item}
+                key={item.value}
+                ref={selectRef}
                 className={styles.selectItem}
               >
-                <HStack>{movie.component}</HStack>
+                <HStack>{item.component}</HStack>
                 <Select.ItemIndicator />
               </Select.Item>
             ))}
