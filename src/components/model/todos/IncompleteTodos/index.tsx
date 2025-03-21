@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { TodoItem } from '../TodoItem';
 import styles from './index.module.css';
-import type { Todo } from '@/types/todo';
+import type { Todo, Status } from '@/types/todo';
 
 type Props = {
   incompleteTodos: Todo[];
@@ -9,6 +9,8 @@ type Props = {
   onClickEdit: (todo: Todo) => void;
   onClickSave: (id: string) => void;
   onClickEditCancel: (id: string) => void;
+  onUpdateText?: (id: string, text: string) => void;
+  onUpdateStatus?: (id: string, status: Status) => void;
 };
 
 export const IncompleteTodos: React.FC<Props> = memo(
@@ -18,6 +20,8 @@ export const IncompleteTodos: React.FC<Props> = memo(
     onClickEdit,
     onClickSave,
     onClickEditCancel,
+    onUpdateText,
+    onUpdateStatus,
   }) => {
     return (
       <div className={styles.container}>
@@ -34,6 +38,8 @@ export const IncompleteTodos: React.FC<Props> = memo(
                 onClickEdit={onClickEdit}
                 onClickSave={onClickSave}
                 onClickEditCancel={onClickEditCancel}
+                onUpdateText={onUpdateText}
+                onUpdateStatus={onUpdateStatus}
               />
             ))}
           </ul>

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { CloseButton, Dialog, Portal } from '@chakra-ui/react';
-import { memo } from 'react';
+import { memo, useRef, useCallback } from 'react';
 
 type Props = {
   trigger: React.ReactNode;
@@ -18,6 +18,18 @@ export const EditTodoDialog: React.FC<Props> = memo(
     saveLabel = '保存',
     onSave,
   }) => {
+    const closeRef = useRef<HTMLButtonElement>(null);
+
+    const handleSave = useCallback(() => {
+      onSave();
+
+      setTimeout(() => {
+        if (closeRef.current) {
+          closeRef.current.click();
+        }
+      }, 200);
+    }, [onSave]);
+
     return (
       <Dialog.Root>
         <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
@@ -30,15 +42,13 @@ export const EditTodoDialog: React.FC<Props> = memo(
               </Dialog.Header>
               <Dialog.Body>{body}</Dialog.Body>
               <Dialog.Footer>
-                <Dialog.ActionTrigger asChild>
+                <Dialog.CloseTrigger asChild>
                   <Button variant="cancel">{cancelLabel}</Button>
-                </Dialog.ActionTrigger>
-                <Dialog.ActionTrigger asChild>
-                  <Button onClick={onSave}>{saveLabel}</Button>
-                </Dialog.ActionTrigger>
+                </Dialog.CloseTrigger>
+                <Button onClick={handleSave}>{saveLabel}</Button>
               </Dialog.Footer>
               <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" />
+                <CloseButton ref={closeRef} size="sm" />
               </Dialog.CloseTrigger>
             </Dialog.Content>
           </Dialog.Positioner>

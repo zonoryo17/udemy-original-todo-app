@@ -16,6 +16,8 @@ export const App: React.FC = () => {
     onClickSave,
     handleClickDeleteAllItems,
     handleClickEditCancel,
+    handleUpdateText,
+    handleUpdateStatus,
   } = useTodo();
 
   const isIncompleteTodosLimit = incompleteTodos.length >= 5;
@@ -41,6 +43,8 @@ export const App: React.FC = () => {
         onClickEdit={onClickEdit}
         onClickSave={onClickSave}
         onClickEditCancel={handleClickEditCancel}
+        onUpdateText={handleUpdateText}
+        onUpdateStatus={handleUpdateStatus}
       />
       <CompleteTodos
         completeTodos={completeTodos}
@@ -48,6 +52,8 @@ export const App: React.FC = () => {
         onClickSave={onClickSave}
         onClickDeleteAllItems={handleClickDeleteAllItems}
         onClickEditCancel={handleClickEditCancel}
+        onUpdateText={handleUpdateText}
+        onUpdateStatus={handleUpdateStatus}
       />
     </div>
   );

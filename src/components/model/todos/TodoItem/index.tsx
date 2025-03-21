@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import styles from './index.module.css';
-import type { Todo } from '@/types/todo';
+import type { Todo, Status } from '@/types/todo';
 import { EditTodoDialog } from '../EditTodoDialog';
 import { memo } from 'react';
 import { EditingTodoItem } from '../EditingTodoItem';
@@ -13,10 +13,20 @@ type Props = {
   onClickSave: (id: string) => void;
   onClickDelete?: (id: string) => void;
   onClickEditCancel: (id: string) => void;
+  onUpdateText?: (id: string, text: string) => void;
+  onUpdateStatus?: (id: string, status: Status) => void;
 };
 
 export const TodoItem: React.FC<Props> = memo(
-  ({ item, onClickEdit, onClickSave, onClickDelete, onClickEditCancel }) => {
+  ({
+    item,
+    onClickEdit,
+    onClickSave,
+    onClickDelete,
+    onClickEditCancel,
+    onUpdateText,
+    onUpdateStatus,
+  }) => {
     return (
       <li key={item.id}>
         <div className={styles.listRow}>
@@ -39,6 +49,8 @@ export const TodoItem: React.FC<Props> = memo(
                 <EditingTodoItem
                   item={item}
                   onClickEditCancel={onClickEditCancel}
+                  onUpdateText={onUpdateText}
+                  onUpdateStatus={onUpdateStatus}
                 />
               }
               onSave={() => onClickSave(item.id)}
