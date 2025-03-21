@@ -13,7 +13,7 @@ export const EditingTodoItem: React.FC<Props> = ({ item }) => {
       <div className={styles.listLeftItem}>
         <div className={styles.editBlock}>
           <p className={styles.title}>Status</p>
-          <StatusSelectMenu />
+          <StatusSelectMenu defaultValue={item.status} />
         </div>
         <div className={styles.editBlock}>
           <p className={styles.title}>Text</p>

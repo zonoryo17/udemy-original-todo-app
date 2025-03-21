@@ -10,6 +10,7 @@ import {
 import { RiForbidLine } from 'react-icons/ri';
 import { StatusBudge } from '../../../ui/StatusBudge';
 import styles from './index.module.css';
+import { Status } from '@/types/todo';
 
 type Framework = {
   label: string;
@@ -18,6 +19,7 @@ type Framework = {
 };
 
 type Props = {
+  defaultValue?: Status;
   selectRef?:
     | React.RefObject<HTMLDivElement>
     | ((instance: HTMLDivElement | null) => void)
@@ -47,13 +49,16 @@ const SelectTrigger = () => {
   );
 };
 
-export const StatusSelectMenu: React.FC<Props> = ({ selectRef }) => {
+export const StatusSelectMenu: React.FC<Props> = ({
+  defaultValue = 'todo',
+  selectRef,
+}) => {
   return (
     <Select.Root
       positioning={{ sameWidth: false }}
       collection={frameworks}
       size="sm"
-      defaultValue={['todo']}
+      defaultValue={[defaultValue]}
     >
       <Select.HiddenSelect />
       <Select.Control>
