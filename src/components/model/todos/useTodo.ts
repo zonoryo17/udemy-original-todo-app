@@ -17,11 +17,11 @@ export const useTodo = () => {
   /**
    * Methods
    */
-  const onChangeTodoText = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTodoText = (event: ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value);
   };
 
-  const onClickAdd = useCallback(() => {
+  const handleClickAdd = useCallback(() => {
     if (todoText.trim() === '') return;
 
     setIncompleteTodos((prevTodos) => [
@@ -36,7 +36,7 @@ export const useTodo = () => {
     setTodoText('');
   }, [todoText]);
 
-  const onClickEdit = useCallback((todo: Todo) => {
+  const handleClickEdit = useCallback((todo: Todo) => {
     setIncompleteTodos((prevTodos) =>
       prevTodos.map((t) => (t.id === todo.id ? { ...t, isEditing: true } : t))
     );
@@ -50,7 +50,7 @@ export const useTodo = () => {
     }));
   }, []);
 
-  const onClickDelete = useCallback(
+  const handleClickDelete = useCallback(
     (id: string) => {
       const targetIncompleteTodo = incompleteTodos.find(
         (todo) => todo.id === id
@@ -68,7 +68,6 @@ export const useTodo = () => {
     setCompleteTodos([]);
   }, []);
 
-  // 編集中のテキスト更新
   const handleUpdateText = useCallback((id: string, text: string) => {
     setEditingTodos((prev) => {
       if (!prev[id]) return prev;
@@ -109,7 +108,7 @@ export const useTodo = () => {
     [incompleteTodos, completeTodos]
   );
 
-  const onClickSave = useCallback(
+  const handleClickSave = useCallback(
     (id: string) => {
       const editData = editingTodos[id];
       if (!editData) return;
@@ -182,12 +181,12 @@ export const useTodo = () => {
     todoText,
     incompleteTodos,
     completeTodos,
-    onChangeTodoText,
-    onClickAdd,
-    onClickEdit,
-    onClickDelete,
+    handleChangeTodoText,
+    handleClickAdd,
+    handleClickEdit,
+    handleClickDelete,
     handleClickDeleteAllItems,
-    onClickSave,
+    handleClickSave,
     handleClickEditCancel,
     handleUpdateText,
     handleUpdateStatus,

@@ -9,11 +9,11 @@ export const App: React.FC = () => {
     todoText,
     incompleteTodos,
     completeTodos,
-    onChangeTodoText,
-    onClickAdd,
-    onClickDelete,
-    onClickEdit,
-    onClickSave,
+    handleChangeTodoText,
+    handleClickAdd,
+    handleClickDelete,
+    handleClickEdit,
+    handleClickSave,
     handleClickDeleteAllItems,
     handleClickEditCancel,
     handleUpdateText,
@@ -26,8 +26,8 @@ export const App: React.FC = () => {
     <div className="container">
       <InputTodo
         todoText={todoText}
-        onChangeTodoText={onChangeTodoText}
-        onClickAdd={onClickAdd}
+        onChangeTodoText={handleChangeTodoText}
+        onClickAdd={handleClickAdd}
         disabled={isIncompleteTodosLimit}
       />
 
@@ -39,17 +39,17 @@ export const App: React.FC = () => {
 
       <IncompleteTodos
         incompleteTodos={incompleteTodos}
-        onClickDelete={onClickDelete}
-        onClickEdit={onClickEdit}
-        onClickSave={onClickSave}
+        onClickDelete={handleClickDelete}
+        onClickEdit={handleClickEdit}
+        onClickSave={handleClickSave}
         onClickEditCancel={handleClickEditCancel}
         onUpdateText={handleUpdateText}
         onUpdateStatus={handleUpdateStatus}
       />
       <CompleteTodos
         completeTodos={completeTodos}
-        onClickEdit={onClickEdit}
-        onClickSave={onClickSave}
+        onClickEdit={handleClickEdit}
+        onClickSave={handleClickSave}
         onClickDeleteAllItems={handleClickDeleteAllItems}
         onClickEditCancel={handleClickEditCancel}
         onUpdateText={handleUpdateText}

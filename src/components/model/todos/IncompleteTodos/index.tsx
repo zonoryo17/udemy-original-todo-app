@@ -26,6 +26,7 @@ export const IncompleteTodos: React.FC<Props> = memo(
     return (
       <div className={styles.container}>
         <p className={styles.title}>未完了のTODO</p>
+
         {incompleteTodos.length === 0 ? (
           <p className={styles.noTodo}>未完了のTODOはありません。</p>
         ) : (

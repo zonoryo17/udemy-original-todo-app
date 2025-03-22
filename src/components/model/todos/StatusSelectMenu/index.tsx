@@ -8,10 +8,10 @@ import {
   useSelectContext,
 } from '@chakra-ui/react';
 import { RiForbidLine } from 'react-icons/ri';
-import { StatusBudge } from '../../../ui/StatusBudge';
 import styles from './index.module.css';
 import { Status } from '@/types/todo';
 import { useEffect, useState } from 'react';
+import { StatusBudge } from '@/components/ui/StatusBudge';
 
 type Framework = {
   label: string;
@@ -21,16 +21,13 @@ type Framework = {
 
 type Props = {
   defaultValue?: Status;
-  selectRef?:
-    | React.RefObject<HTMLDivElement>
-    | ((instance: HTMLDivElement | null) => void)
-    | null;
+  selectRef?: React.RefObject<HTMLDivElement> | null;
   onStatusChange?: (status: Status) => void;
 };
 
 type ValueChangeDetails = {
   value: string[];
-  selectedItems?: Array<Framework>;
+  selectedItems?: Framework[];
 };
 
 const frameworks = createListCollection({

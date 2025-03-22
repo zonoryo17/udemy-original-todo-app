@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 import { useInputTodo } from './useInputTodo';
 import styles from './index.module.css';
-import { Button } from '../../../ui/Button';
+import { Button } from '@chakra-ui/react';
 
 type Props = {
   todoText: string;
