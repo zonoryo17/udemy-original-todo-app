@@ -68,7 +68,7 @@ export const useTodo = () => {
     setCompleteTodos([]);
   }, []);
 
-  const handleUpdateText = useCallback((id: string, text: string) => {
+  const handleTextChange = useCallback((id: string, text: string) => {
     setEditingTodos((prev) => {
       if (!prev[id]) return prev;
 
@@ -79,7 +79,7 @@ export const useTodo = () => {
     });
   }, []);
 
-  const handleUpdateStatus = useCallback(
+  const handleStatusChange = useCallback(
     (id: string, status: Status) => {
       setEditingTodos((prev) => {
         if (!prev[id]) {
@@ -188,8 +188,8 @@ export const useTodo = () => {
     handleClickDeleteAllItems,
     handleClickSave,
     handleClickEditCancel,
-    handleUpdateText,
-    handleUpdateStatus,
+    handleTextChange,
+    handleStatusChange,
     editingTodos,
   };
 };

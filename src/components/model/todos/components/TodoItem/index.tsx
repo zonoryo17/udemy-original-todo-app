@@ -13,8 +13,8 @@ type Props = {
   onClickSave: (id: string) => void;
   onClickDelete?: (id: string) => void;
   onClickEditCancel: (id: string) => void;
-  onUpdateText?: (id: string, text: string) => void;
-  onUpdateStatus?: (id: string, status: Status) => void;
+  onTextChange?: (id: string, text: string) => void;
+  onStatusChange?: (id: string, status: Status) => void;
 };
 
 export const TodoItem: React.FC<Props> = memo(
@@ -24,17 +24,17 @@ export const TodoItem: React.FC<Props> = memo(
     onClickSave,
     onClickDelete,
     onClickEditCancel,
-    onUpdateText,
-    onUpdateStatus,
+    onTextChange,
+    onStatusChange,
   }) => {
     return (
       <li key={item.id}>
-        <div className={styles.listRow}>
-          <div className={styles.listLeftItem}>
+        <div className={styles.container}>
+          <div className={styles.leftItem}>
             <StatusBudge status={item.status} />
             <p className="todo-item">{item.text}</p>
           </div>
-          <div className={styles.listRightItem}>
+          <div>
             <EditTodoDialog
               trigger={
                 <Button
@@ -49,8 +49,8 @@ export const TodoItem: React.FC<Props> = memo(
                 <EditingTodoItem
                   item={item}
                   onClickEditCancel={onClickEditCancel}
-                  onUpdateText={onUpdateText}
-                  onUpdateStatus={onUpdateStatus}
+                  onTextChange={onTextChange}
+                  onStatusChange={onStatusChange}
                 />
               }
               onSave={() => onClickSave(item.id)}

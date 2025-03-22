@@ -9,8 +9,8 @@ type Props = {
   onClickEdit: (todo: Todo) => void;
   onClickSave: (id: string) => void;
   onClickEditCancel: (id: string) => void;
-  onUpdateText?: (id: string, text: string) => void;
-  onUpdateStatus?: (id: string, status: Status) => void;
+  onTextChange?: (id: string, text: string) => void;
+  onStatusChange?: (id: string, status: Status) => void;
 };
 
 export const IncompleteTodos: React.FC<Props> = memo(
@@ -20,8 +20,8 @@ export const IncompleteTodos: React.FC<Props> = memo(
     onClickEdit,
     onClickSave,
     onClickEditCancel,
-    onUpdateText,
-    onUpdateStatus,
+    onTextChange,
+    onStatusChange,
   }) => {
     return (
       <div className={styles.container}>
@@ -39,8 +39,8 @@ export const IncompleteTodos: React.FC<Props> = memo(
                 onClickEdit={onClickEdit}
                 onClickSave={onClickSave}
                 onClickEditCancel={onClickEditCancel}
-                onUpdateText={onUpdateText}
-                onUpdateStatus={onUpdateStatus}
+                onTextChange={onTextChange}
+                onStatusChange={onStatusChange}
               />
             ))}
           </ul>

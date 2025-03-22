@@ -1,6 +1,6 @@
-import { CompleteTodos } from './components/model/todos/CompleteTodos';
-import { IncompleteTodos } from './components/model/todos/IncompleteTodos';
-import { InputTodo } from './components/model/todos/InputTodo';
+import { CompleteTodos } from './components/model/todos/components/CompleteTodos';
+import { IncompleteTodos } from './components/model/todos/components/IncompleteTodos';
+import { InputTodo } from './components/model/todos/components/InputTodo';
 import { useTodo } from './components/model/todos/useTodo';
 import './styles.css';
 
@@ -16,8 +16,8 @@ export const App: React.FC = () => {
     handleClickSave,
     handleClickDeleteAllItems,
     handleClickEditCancel,
-    handleUpdateText,
-    handleUpdateStatus,
+    handleTextChange,
+    handleStatusChange,
   } = useTodo();
 
   const isIncompleteTodosLimit = incompleteTodos.length >= 5;
@@ -43,8 +43,8 @@ export const App: React.FC = () => {
         onClickEdit={handleClickEdit}
         onClickSave={handleClickSave}
         onClickEditCancel={handleClickEditCancel}
-        onUpdateText={handleUpdateText}
-        onUpdateStatus={handleUpdateStatus}
+        onTextChange={handleTextChange}
+        onStatusChange={handleStatusChange}
       />
       <CompleteTodos
         completeTodos={completeTodos}
@@ -52,8 +52,8 @@ export const App: React.FC = () => {
         onClickSave={handleClickSave}
         onClickDeleteAllItems={handleClickDeleteAllItems}
         onClickEditCancel={handleClickEditCancel}
-        onUpdateText={handleUpdateText}
-        onUpdateStatus={handleUpdateStatus}
+        onTextChange={handleTextChange}
+        onStatusChange={handleStatusChange}
       />
     </div>
   );

@@ -15,6 +15,12 @@
   font-weight: bold;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .noTodo {
   text-align: center;
 }

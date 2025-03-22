@@ -1,52 +1,25 @@
 import styles from './index.module.css';
 import type { Todo, Status } from '@/types/todo';
 import { StatusSelectMenu } from '../StatusSelectMenu';
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 
 type Props = {
   item: Todo;
   onClickEditCancel: (id: string) => void;
-  onUpdateText?: (id: string, text: string) => void;
-  onUpdateStatus?: (id: string, status: Status) => void;
+  onTextChange?: (id: string, text: string) => void;
+  onStatusChange?: (id: string, status: Status) => void;
 };
 
 export const EditingTodoItem: React.FC<Props> = ({
   item,
-  onUpdateText,
-  onUpdateStatus,
+  onTextChange,
+  onStatusChange,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [currentStatus, setCurrentStatus] = useState<Status>(item.status);
 
   const handleStatusChange = (status: Status) => {
-    setCurrentStatus(status);
-
-    if (onUpdateStatus) {
-      onUpdateStatus(item.id, status);
-    }
+    if (onStatusChange) onStatusChange(item.id, status);
   };
-
-  const handleTextChange = () => {
-    if (inputRef.current && onUpdateText) {
-      const newText = inputRef.current.value;
-      onUpdateText(item.id, newText);
-    }
-  };
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = item.text;
-    }
-
-    setCurrentStatus(item.status);
-
-    if (onUpdateStatus) {
-      onUpdateStatus(item.id, item.status);
-    }
-    if (onUpdateText && inputRef.current) {
-      onUpdateText(item.id, item.text);
-    }
-  }, [item, onUpdateStatus, onUpdateText]);
 
   return (
     <div className={styles.listRow}>
@@ -54,7 +27,7 @@ export const EditingTodoItem: React.FC<Props> = ({
         <div className={styles.editBlock}>
           <p className={styles.title}>Status</p>
           <StatusSelectMenu
-            defaultValue={currentStatus}
+            defaultValue={item.status}
             onStatusChange={handleStatusChange}
           />
         </div>
@@ -65,7 +38,7 @@ export const EditingTodoItem: React.FC<Props> = ({
             type="text"
             defaultValue={item.text}
             className={styles.input}
-            onChange={handleTextChange}
+            onChange={(e) => onTextChange?.(item.id, e.target.value)}
           />
         </div>
       </div>

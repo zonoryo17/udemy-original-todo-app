@@ -1,5 +1,5 @@
-import { ConfirmDialog } from '../../../ui/ConfirmDialog';
-import { Icon } from '../../../ui/Icon';
+import { ConfirmDialog } from '../../../../ui/ConfirmDialog';
+import { Icon } from '../../../../ui/Icon';
 import styles from './index.module.css';
 import type { Todo, Status } from '@/types/todo';
 import { TodoItem } from '../TodoItem';
@@ -11,8 +11,8 @@ type Props = {
   onClickSave: (id: string) => void;
   onClickDeleteAllItems: () => void;
   onClickEditCancel: (id: string) => void;
-  onUpdateText?: (id: string, text: string) => void;
-  onUpdateStatus?: (id: string, status: Status) => void;
+  onTextChange?: (id: string, text: string) => void;
+  onStatusChange?: (id: string, status: Status) => void;
 };
 
 export const CompleteTodos: React.FC<Props> = memo(
@@ -22,8 +22,8 @@ export const CompleteTodos: React.FC<Props> = memo(
     onClickSave,
     onClickDeleteAllItems,
     onClickEditCancel,
-    onUpdateText,
-    onUpdateStatus,
+    onTextChange,
+    onStatusChange,
   }) => {
     return (
       <div className={styles.container}>
@@ -56,8 +56,8 @@ export const CompleteTodos: React.FC<Props> = memo(
                 onClickEdit={onClickEdit}
                 onClickSave={onClickSave}
                 onClickEditCancel={onClickEditCancel}
-                onUpdateText={onUpdateText}
-                onUpdateStatus={onUpdateStatus}
+                onTextChange={onTextChange}
+                onStatusChange={onStatusChange}
               />
             ))}
           </ul>

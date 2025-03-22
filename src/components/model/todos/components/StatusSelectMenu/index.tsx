@@ -10,7 +10,7 @@ import {
 import { RiForbidLine } from 'react-icons/ri';
 import styles from './index.module.css';
 import { Status } from '@/types/todo';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StatusBudge } from '@/components/ui/StatusBudge';
 
 type Framework = {
@@ -60,15 +60,8 @@ export const StatusSelectMenu: React.FC<Props> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState<string[]>([defaultValue]);
 
-  useEffect(() => {
-    if (onStatusChange) {
-      onStatusChange(defaultValue);
-    }
-    setSelectedValue([defaultValue]);
-  }, [defaultValue, onStatusChange]);
-
   const handleValueChange = (details: ValueChangeDetails) => {
-    if (details && Array.isArray(details.value) && details.value.length > 0) {
+    if (details.value.length > 0) {
       const newValue = details.value[0] as Status;
 
       setSelectedValue([newValue]);
